@@ -1,0 +1,727 @@
+ this.router.navigateByUrl('/login');
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ 1  find data now date before 30 left data
+
+ const autoOrderDelete = async () => {
+        const thirtyDaysFromNow = new Date(new Date().setDate(new Date().getDate() - 30));
+        const data = await orderModel.findAll({
+          where: {
+            createdAt:{
+                $lt: thirtyDaysFromNow,
+              },
+          }
+        })
+        return data;
+      }
+	  //
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,	  
+ 2. use for encrypt and decrypt 
+
+var CryptoJS = require("crypto-js");
+exports.Encrypt = function (text) {
+    // var chars = { '+': 'xMl3Jk', '/': 'Por21Ld', '=': 'Ml32' };
+    var chars = { '/': 'Por21Ld' };
+    var crypted = CryptoJS.AES.encrypt(JSON.stringify({ text }), 'debuggedpropass').toString();
+    let ciphertext
+    if (crypted.indexOf("/") == -1)
+        ciphertext = crypted
+    else
+        ciphertext = crypted.replace(/[/]/g, m => chars[m]);
+    // var ciphertext = crypted.toString().replace('+','xMl3Jk').replace('/','Por21Ld').replace('=','Ml32');
+    return ciphertext;
+}
+exports.Decrypt = function (text) {
+    // var chars = { 'xMl3Jk': '+', 'Por21Ld': '/', 'Ml32': '=' };
+    var chars = { 'Por21Ld': '/' };
+    // let newitem = text.toString().replace('xMl3Jk', '+').replace('Por21Ld', '/').replace('Ml32', '=');
+    let newitem
+    if (text.indexOf("Por21Ld") == -1)
+        newitem = text
+    else
+        newitem = text.replace(/Por21Ld/g, m => chars[m]);
+        // newitem = text.replace('Por21Ld','/');
+    var bytes = CryptoJS.AES.decrypt(newitem, 'debuggedpropass').toString(CryptoJS.enc.Utf8);
+    const info3 = JSON.parse(bytes);
+    var originalText = info3.text;
+    return originalText;
+}
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+3 take only one from array
+
+function myFunction() {
+  var fruits = ["Banana", "Orange", "Apple", "Mango","Apple"];
+  fruits = fruits.filter((v, i) => fruits.indexOf(v) === i);
+  document.getElementById("demo").innerHTML = fruits;
+}
+
+&&
+let sellerSkuArray = [];
+            if (sellerSkuArray.length == 0) {
+                sellerSkuArray.push(element.SellerSKU);
+            } else if (sellerSkuArray.filter(x => x == element.SellerSKU).length == 0) {
+                sellerSkuArray.push(element.SellerSKU);
+            }
+,,,,,,,,,
+&&&
+var flags = [], batchOutput = [], l = keyArray.length, i;
+      for (i = 0; i < l; i++) {
+        if (flags[keyArray[i].batch]) continue;
+        flags[keyArray[i].batch] = true;
+        batchOutput.push(keyArray[i].batch);
+      }
+advance
+this is use fro load or filter data acc to catagory
+,,,,,,
+  filterData(cat) {
+    this.category_name = cat.name
+    this.blogCategoryList.forEach(element => {
+      element.active = false;
+    });
+    let index = this.blogCategoryList.findIndex(x => x.id == cat.id);
+    if (index !== -1)
+    this.blogCategoryList[index].active = true;
+    this.hidden = false;
+
+    if (cat.name == "All Categories") {
+      this.temp = [];
+      this.blogData = [];
+      this.blogData = this.allblogData;
+      this.temp = this.allblogData;
+      this.onCheck(0, 3, cat)
+    }
+    else {
+      this.blogData = this.allblogData.filter(x => x.blogCategoryId == cat.id);
+      this.onCheck(0, 3, cat)
+
+    }
+  }
+  onCheck(start, end, cat = null) {
+    if (cat && cat !== null) {
+      this.temp = [];
+      this.start = 0;
+      this.end = 0;
+      for (let index = 0; index < this.blogData.length; index++) {
+        this.temp.push(this.blogData[index]);
+        this.temp = this.temp.filter((v, i) => this.temp.indexOf(v) === i);
+      }
+      this.start = this.start + start
+      this.end = this.end + end
+      this.temp = this.temp.slice(this.start, this.end);
+      if (this.temp.length === this.blogData.length) {
+        this.hidden = true;
+      }
+    }
+    else {
+      for (let index = 0; index < this.blogData.length; index++) {
+        this.temp.push(this.blogData[index]);
+        this.temp = this.temp.filter((v, i) => this.temp.indexOf(v) === i);
+      }
+      this.start = this.start + start
+      this.end = this.end + end
+      this.temp = this.temp.slice(this.start, this.end);
+      if (this.temp.length === this.blogData.length) {
+        this.hidden = true;
+      }
+    }
+,,,,,,,,,,,,,,,,,,,,,,,,,,
+4 use for Load more take only 3 -3 pair
+
+onCheck(start, end) {
+    for (let index = 0; index < this.blogData.length; index++) {
+      this.temp.push(this.blogData[index]);
+      this.temp = this.temp.filter((v, i) => this.temp.indexOf(v) === i);
+    }
+    this.start = this.start + start
+    this.end = this.end + end
+    this.temp = this.temp.slice(this.start, this.end);
+    if (!this.temp.length) {
+      console.log("no more found")
+    }
+    else {
+      console.log(this.temp);
+    }
+
+  }
+}
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+5. use this code to click any where on input box
+
+<style type="text/css">
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+</style>
+<input type="date">
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6.push data in object{  push=>array:[{}]}
+
+  var a = { obj: "1M", obj1: "2S", obj3: "1q" };
+            var FeedData = {
+                "AmazonEnvelope": {
+                    "Header": {
+                        "DocumentVersion": "1.02",
+                        "MerchantIdentifier": "1234"
+                    },
+                    "MessageType": "",
+                    "Message": [{
+                        "MessageID": "1234",
+                        "Inventory": {
+                            "SKU": "1234",
+                            "Quantity": "1234"
+                        }
+                    }]
+
+                }
+            }
+            FeedData['AmazonEnvelope']['Message'].push({
+                "MessageID": a.obj,
+                "Inventory": {
+                    "SKU": a.obj1,
+                    "Quantity":a.obj3
+                }
+            })
+            console.log(FeedData);
+
+'''''''''''''''''''''''''''''''''''''''''''
+
+7. pattern for validtion
+
+((https?:\/\/|(www|cn|in)).linkedin.(com|in)\/(in|pub)\/[A-Za-z0-9%]|(https?:\/\/|www).(facebook|fb).com\/[A-zA-z0-9])
+ 
+ remove all tag change into html
+   var plainText = text.replace(/<[^>]*>/g, '');
+''''''''''''''''''''''''''''''''''
+
+9. some function use in array
+// }
+  test(email) {
+    debugger
+    let a = email.split('@')[1];
+    let b = ['coldcrm.com']
+
+    let value = b.some(function (element) {
+      return element == a;
+    })
+    console.log(value)
+  }
+  
+  //////////////////////or//////////////
+    test(email) {
+    debugger
+    let a = email.split('@')[1];
+    let b = ['coldcrm.com']
+  for (const key in b) {
+    if (Object.prototype.hasOwnProperty.call(b, key)) {
+      const element = b[key];
+
+      if(a == element){
+        alert('ok')
+      }
+    }
+  }
+  ////////////////////////////////////
+  test(email) {
+    let a = email.split('@')[1];
+    let b = a.match('/@(?=coldcrm.com)/');
+    if(b =a){
+      alert("ok")
+    }
+
+data: { title: 'Home - Debugged Pro', ogUrl: 'https://debugged-pro.com/home', ogTitle: 'Home - Debugged-Pro'  } 
+
+  }	
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 10.reactive with array 
+ .ts{
+ 
+  EditVenderSetting() {
+
+    // it make reactive form for  EditVendorSetting
+    this.EditVendorSettingForm = this.fb.group({
+      sellerId: [''],
+      marketplaceId: [''],
+      refreshToken: [''],
+      RecieveSucessLoginEmail: [false],
+      RecieveFailedLoginEmail: [false],
+      RecieveEmailWhenUserLock: [false],
+      InventoryUpdate: [false],
+      ApplyRestrictionOnThreshold: [false],
+      ThresholdValue: [0],
+      ApiRequestHourly: [0],
+      ApiRequestDaily: [0],
+      RestrictOrderQuantity: [false],
+      MaxOrderQuantity: [0],
+      order_qty_sku: this.fb.array([this.createItem()])
+
+    })
+    if (this.localdata.action == 'EditVendorSetting') {
+      this.defaultValues = JSON.parse(this.localdata.setting.defaultValues);
+      this.EditVendorSettingForm.patchValue({
+        sellerId: this.localdata.setting.sellerId,
+        marketplaceId: this.localdata.setting.marketplaceId,
+        refreshToken: this.localdata.setting.refreshToken,
+        RecieveSucessLoginEmail: this.defaultValues.recieve_success_login_email,
+        RecieveFailedLoginEmail: this.defaultValues.recieve_failed_login_email,
+        RecieveEmailWhenUserLock: this.defaultValues.recieve_lock_login_email,
+        InventoryUpdate: this.defaultValues.inventory_update,
+        ApplyRestrictionOnThreshold: this.defaultValues.apply_restriction_on_threshold,
+        ThresholdValue: this.defaultValues.threshold,
+        ApiRequestHourly: this.defaultValues.api_request_hourly,
+        ApiRequestDaily: this.defaultValues.api_request_daily,
+        RestrictOrderQuantity: this.defaultValues.restrict_order_qty,
+        MaxOrderQuantity: this.defaultValues.max_order_qty,
+
+      });
+      let controle = <FormArray>(this.EditVendorSettingForm.get("order_qty_sku"));
+      this.defaultValues.order_qty_sku.forEach(element => {
+        controle.push(this.createItem(element));
+      });
+      controle.removeAt(0)
+    }
+  }
+  ///////////////////////////////////
+11 . bulk update 
+
+  const updateRoles = async (roleData) => {
+        const roleid = roleData.id
+        const role = roleTemplateModel.update({ name: roleData.name },
+            {
+                where: { id: roleid }
+            });
+        await Promise.all(roleData.modules.map((module) => roleAccess.update(module, {
+            where: { id: module.id },
+        })));
+        return role;
+    };
+
+/////////////////////
+12. deepe check array duplicate
+const arr = [
+    {label: 'All', value: [{key:'123',key:'231'}]},
+    {label: 'Al12', value: [{key:'123',key:'231'}]},
+    {label: 'Alex', value: 'Ninja'},
+    {label: 'Bill', value: 'Op'},
+    {label: 'Cill', value: 'iopop'}
+]
+
+var result = arr.reduce((unique, o) => {
+    if(!unique.some(obj => obj.label === o.label)) {
+      unique.push(o);
+    }
+    return unique;
+},[]);
+console.log(result);
+#####and###
+const arr = [
+    {label: 'All', value: 'All'},
+    {label: 'All', value: 'fdgg'},
+    {label: 'Alex', value: 'Ninja'},
+    
+]
+
+var result = arr.reduce((unique, o) => {
+    if(!unique.some(obj => obj.label === o.label )) {
+      unique.push(o);
+    }
+    return unique;
+},[]);
+console.log(result);
+####and######
+if (productIdList.length == 0) {
+                        productIdList.push(element.productId);
+                    } else if (productIdList.filter(x => x == element.productId).length == 0) {
+                        productIdList.push(element.productId);
+                    }
+/////////////////////////////////////////////////////////////////////////
+13..
+var oldString ="shubham - sharma - team";
+var titleCase = oldString
+               .replace(/([a-z])([A-Z])/g, function (allMatches, firstMatch, secondMatch) {
+                     return firstMatch + " " + secondMatch;
+               })
+               .toLowerCase()
+               .replace(/([ -_]|^)(.)/g, function (allMatches, firstMatch, secondMatch) {
+                     return (firstMatch ? " " : "") + secondMatch.toUpperCase();
+               }
+);
+titleCase = titleCase.replace(/-/g,"");
+console.log(titleCase);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+14...replace forward backwardslash
+PortfolioData.title.replace(/\\|\/|\s+/g, '-').toLowerCase();
+////////////////////////////////////////////////
+15 sort data sortData(data) {
+    return data.sort((a, b) => {
+      return <any>new Date(b.createdAt) - <any>new Date(a.createdAt);
+    });
+  }
+///////////////////////////////////////
+16
+/////////////////////
+
+ const thirtyDayOldDate = new Date(new Date().setDate(new Date().getDate() - 30)).setHours(0, 0, 0, 0);
+        const thirtyOneDaysOldDate = new Date(new Date().setDate(new Date().getDate() - 31)).setHours(0, 0, 0, 0);
+        const res = await orderModel.update(data, {
+            where: {
+                createdAt: {
+                    [Op.gte]: thirtyOneDaysOldDate,
+                    [Op.lte]: thirtyDayOldDate,
+                },
+            }
+//////////////////////////////////////////////////////
+17
+//////////////////////////////////////////////////////
+Dublicate found + count
+  if (productArray.length == 0) {
+              productArray.push({ productId: element.productId, count: 1 });
+            } else {
+              let filterProductIndex = productArray.findIndex(x => x.productId == element.productId);
+              if (filterProductIndex == -1) {
+                productArray.push({ productId: element.productId, count: 1 });
+              } else {
+                productArray[filterProductIndex].count = productArray[filterProductIndex].count + 1
+              }
+            }
+////////////////////////////////////////////////////////////////
+18
+///////////////////////////////////////////
+this is used for send email and with replacement in this productKey is a index.html file
+  EmailHtml = readHTMLFile(productKey, function (err, html) {
+        var template = handlebars.compile(html);
+        var replacements = {
+        };
+        var EmailHtml = template(replacements);
+        EmailHtml = EmailHtml.replace('@@productkeysValue@@',emailData.data)
+        const mailOptions = {
+          subject: envi == 'development' ? envi + '  Added Product Key  ' : " Added Product Key  ", // Subject line
+          from: emailTransporter.emailAddress, // sender address
+          to: emailData.email,
+          html: EmailHtml,
+
+        };
+        emailTransporter.dProTransporter.sendMail(mailOptions, function (err, info) {
+          if (err)
+            console.log(err)
+          else
+            console.log(info);
+
+        });
+      })
+	  //////////////////////////////////////////////
+19///////////////////////////////////
+<p id="demo"></p>
+<p id="demo1"></p>
+<p id="demo2"></p>
+<p id="demo4"></p>
+<script>
+function myFunction() {
+  var str = "Hello world!sad";  
+  var res = str.substr(-3);
+  var a = str.length-res.length;
+  var result = str.substr(0,a);
+  result = result.replace(/[a-zA-Z0-9' '@#!$%^&*()_+?~<>,.-=]/g,"*");
+ var finalResult = result+res;
+  document.getElementById("demo").innerHTML = res;
+  document.getElementById("demo1").innerHTML = a;
+   document.getElementById("demo2").innerHTML = result;
+   document.getElementById("demo4").innerHTML = finalResult;
+}
+</script>Hello World xvcv
+//////////////////////////////////////////////	  
+   createItem(data = null) {
+    if (data != null) {
+      return this.fb.group({
+        sku: [data.sku,Validators.required],
+        qty: [data.qty,Validators.required]
+      })
+    }
+    else {
+      return this.fb.group({
+        sku: ['', Validators.required],
+        qty: [0, Validators.required]
+      })
+    }
+  }
+  addItem() {
+    this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
+    let l = this.order_qty_sku.controls.length - 1;
+    // if (this.order_qty_sku.value[l]['sku'] == "" || (this.order_qty_sku.value[l]['qty'] == null || this.order_qty_sku.value[l]['qty'] == '' )) {
+    if (this.order_qty_sku.status == "INVALID") {
+      return this.issue = true
+    }
+    this.order_qty_sku.push(this.createItem());
+    this.issue = false;
+  }
+ removeItem(i) {
+    this.order_qty_sku = this.EditVendorSettingForm.get('order_qty_sku') as FormArray;
+    this.order_qty_sku.removeAt(i)
+  }
+
+
+  get formControl() {
+    return this.EditVendorSettingForm.controls;
+  }
+  
+  
+  
+  ................./f. end.................///////////////////////////////
+  <form *ngIf="action ==  'EditVendorSetting' || action=='AddVendorSetting'" [formGroup]="EditVendorSettingForm">
+  <div class="model-header">
+    <div (click)="closeDialog()" class="close">
+      <mat-icon> close</mat-icon>
+    </div>
+    <h2 mat-dialog-title *ngIf="action == 'EditVendorSetting' "> Edit Settings For Vendor</h2>
+    <h2 mat-dialog-title *ngIf="action=='AddVendorSetting'"> Add Settings For Vendor</h2>
+  </div>
+  <div mat-dialog-content class="model-body  p-10">
+    <div *ngIf="action == 'EditVendorSetting' || action=='AddVendorSetting'">
+      <div class="row ">
+        <div class="col-md-6">
+          <label class="mt-2"> Seller Id </label>
+          <mat-form-field appearance="none">
+            <input placeholder="Seller Id" formControlName="sellerId" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <label class="mt-2"> Marketplace Id</label>
+          <mat-form-field appearance="none">
+            <input placeholder="Marketplace Id" formControlName="marketplaceId" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <label class="mt-2">Refresh Token</label>
+          <mat-form-field appearance="none">
+            <input placeholder="RefreshToken" formControlName="refreshToken" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+      <label class="mt-2">Default Values</label>
+      <div class="row default-row">
+        <div class="col-md-6 mt-2">
+          <mat-checkbox formControlName="RecieveSucessLoginEmail" class="example-margin" matInput>Recieve Sucess Login
+            Email
+          </mat-checkbox>
+        </div>
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin" formControlName="RecieveFailedLoginEmail" matInput>Recievw
+            Failed Login
+            Email
+          </mat-checkbox>
+        </div>
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin" formControlName="RecieveEmailWhenUserLock" matInput>Recieve
+            Email When
+            User Lock
+          </mat-checkbox>
+        </div>
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin" formControlName="InventoryUpdate" matInput>Inventory Update required
+          </mat-checkbox>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin" formControlName="ApplyRestrictionOnThreshold" matInput>Apply Restriction
+            On
+            Threshold
+          </mat-checkbox>
+        </div>
+        <div class="col-md-6 mt-2">
+          <div *ngIf="EditVendorSettingForm.get('ApplyRestrictionOnThreshold').value == true">
+            <label>Threshold Value</label>
+            <mat-form-field appearance="none">
+              <input type="number" formControlName="ThresholdValue" matInput placeholder="Threshold Value">
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label>Api Request Hourly</label>
+          <mat-form-field appearance="none">
+            <input type="number" formControlName="ApiRequestHourly" placeholder="Api Request Hourly" matInput>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label>Api Request Daily</label>
+          <mat-form-field appearance="none">
+            <input type="number" formControlName="ApiRequestDaily" placeholder="Api Request Daily" matInput>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-6 mt-2">
+          <mat-checkbox class="example-margin" formControlName="RestrictOrderQuantity">Restrict Order Quantity
+          </mat-checkbox>
+        </div>
+        <div class="col-md-6 mt-2">
+          <div *ngIf="EditVendorSettingForm.get('RestrictOrderQuantity').value == true  ">
+            <label>Max Order Quantity</label>
+            <mat-form-field appearance="none">
+              <input type="number" formControlName="MaxOrderQuantity" placeholder="Max Order Quantity" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div><label>Order Quantity SKU</label>
+      <div formArrayName="order_qty_sku"
+        *ngFor="let data of EditVendorSettingForm.get('order_qty_sku').controls;let i = index">
+        <div [formGroupName]="i" class="row order_qty_main position-relative align-items-center">
+          <div class="col-md-5 mt-2">
+            <mat-label>Product</mat-label>
+            <mat-form-field appearance="none">
+              <input name="Product" placeholder="Product" formControlName="sku" matInput [ngClass]="{'is-invalid': data.controls.sku.invalid && data.controls.sku.touched ,
+              'is-valid': data.controls.sku.valid, '': data.controls.sku.untouched}">
+            </mat-form-field>
+            <div *ngIf="data.controls.sku.errors" class="invalid-feedback d-block">
+              <div *ngIf="data.controls.sku.touched">
+                Product Is Required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label>Quantity</label>
+            <mat-form-field appearance="none">
+              <input type="number" placeholder="Quantity" name="Quantity" formControlName="qty" matInput [ngClass]=" {'is-invalid':data.controls.qty.invalid && data.controls.qty.touched,
+              'is-valid': data.controls.qty.valid, '': data.controls.qty.untouched}">
+            </mat-form-field>
+            <div *ngIf=" data.controls.qty.errors" class="invalid-feedback d-block">
+              <div *ngIf="data.controls.qty.errors.required">
+                Quantity Is Required
+              </div>
+              <!-- <div *ngIf="data.get('qty').hasError('pattern')">
+                Only Number are allowed
+              </div> -->
+            </div>
+
+          </div>
+          <div class="col-md-2">
+            <div class="remove-item">
+              <a *ngIf=" i > 0" (click)="removeitem(i)">
+                <span class="material-icons"> clear </span></a>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+      <div class="row">
+        <div class="col-md-12" *ngIf="EditVendorSettingForm.invalid && issue">
+          <div class="invalid-feedback d-block"> Product and Quantity Field Must Not Empty
+          </div>
+        </div>
+        <div class="col-md-12 mt-2">
+          <button (click)="addItem()" class="btn btn-primary">
+            AddMore
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- </div> -->
+  <div mat-dialog-actions class="model-footer mt-4 " align="end">
+    <div class="d-flex justify-content-end">
+      <button class="d-flex  btn btn-custom" mat-button (click)="closeDialog()" mat-flat-button>Close</button>
+      <!-- <button class="d-flex  btn btn-custom" mat-button [disabled]="!f.valid" (click)="doAction()">Save Changes</button> -->
+      <button class="d-flex  btn btn-custom" mat-button [disabled]="EditVendorSettingForm.invalid"
+        (click)="doAction()">Save Changes</button>
+    </div>
+  </div>
+</form>
+...................................
+ }
+11 To add date Range_picker
+
+ https://stackblitz.com/edit/angular-material-datetimepicker-issue-1czu9e
+ ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+https://www.positronx.io/angular-seo-set-dynamic-page-title-meta-tags-in-universal-app/
+Adresssssssss[
+1. For cron job
+         https://blog.logrocket.com/task-scheduling-or-cron-jobs-in-node-using-node-cron/
+2. mac address of user
+ https://www.npmjs.com/package/address		 
+		 
+3.amazon api documention for Mws
+https://docs.developer.amazonservices.com/en_US/merch_fulfill/MerchFulfill_Overview.html		
+TechEzy
+https://sellercentral.amazon.in/gp/help/external/6HPRAC8M2CFCXR2 
+ use for fullllll..............................
+https://github.com/amzn/selling-partner-api-docs/tree/main/references
+
+
+SANDBOX
+https://github.com/amzn/selling-partner-api-docs/blob/main/guides/developer-guide/SellingPartnerApiDeveloperGuide.md#how-to-make-a-sandbox-call-to-the-selling-partner-api
+///
+fbm  
+https://www.junglescout.com/blog/how-to-sell-on-amazon-fbm/#listing
+https://github.com/rogersv/selling-partner-api-docs/blob/main/references/merchant-fulfillment-api/merchantFulfillmentV0.md
+smtp
+https://nodemailer.com/extras/smtp-server/
+"body": {
+                      "value": {
+                        "ShipmentRequestDetails": {
+                          "AmazonOrderId": "903-5563053-5647845",
+                          "ItemList": [
+                            {
+                              "OrderItemId": "52986411826454",
+                              "Quantity": 1
+                            }
+                          ],
+                          "ShipFromAddress": {
+                            "Name": "John Doe",
+                            "AddressLine1": "300 Turnbull Ave",
+                            "Email": "jdoeasdfllkj@yahoo.com",
+                            "City": "Detroit",
+                            "StateOrProvinceCode": "MI",
+                            "PostalCode": "48123",
+                            "CountryCode": "US",
+                            "Phone": "7132341234"
+                          },
+                          "PackageDimensions": {
+                            "Length": 10,
+                            "Width": 10,
+                            "Height": 10,
+                            "Unit": "inches"
+                          },
+                          "Weight": {
+                            "Value": 10,
+                            "Unit": "oz"
+                          },
+                          "ShippingServiceOptions": {
+                            "DeliveryExperience": "NoTracking",
+                            "CarrierWillPickUp": false,
+                            "CarrierWillPickUpOption": "ShipperWillDropOff"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }, 	
+
+
+
+
+Ah okay, didn't get that right the first time. I am not familiar with fulfilling digital content via API, but I would think this should be possible with the messaging API, maybe have a look at the createDigitalAccessKey operation and/or the other operations in the messaging section.
+
+
+
+
+ms  ssms download
+
+1 .https://www.microsoft.com/en-in/sql-server/sql-server-downloads
+2 .https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017
+
+
+
+
+
+
+
